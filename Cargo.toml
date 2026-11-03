@@ -1,0 +1,31 @@
+[package]
+name = "battery_management"
+version = "0.1.0"
+edition = "2021"
+
+[[bin]]
+name = "battery_management"
+path = "src/main.rs"
+test = false
+bench = false
+
+[dependencies]
+esp-hal = { version = "1.0.0", features = ["esp32", "unstable"] }
+esp-bootloader-esp-idf = { version = "0.4.0", features = ["esp32"] }
+esp-backtrace = { version = "0.18.0", features = ["esp32", "panic-handler", "println"] }
+esp-println = { version = "0.16.0", features = ["esp32"] }
+nb = "1.1.0"
+libm = "0.2.8"
+
+[profile.dev]
+# Rust is very slow without optimisation on Xtensa
+opt-level = "s"
+
+[profile.release]
+codegen-units = 1
+debug = 2
+debug-assertions = false
+incremental = false
+lto = "fat"
+opt-level = "s"
+overflow-checks = false
